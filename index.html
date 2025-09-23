@@ -1,225 +1,152 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Анфиса — для тебя</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Для моей Анфисы ❤️</title>
   <style>
-    :root{--bg:#fff7fb;--accent:#ff6b9f;--muted:#7a5a6a}
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue';background:linear-gradient(180deg,#fff7fb 0%, #fff0f5 100%);color:#46263a}
-    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:32px}
-    .card{width:980px;max-width:96%;background:rgba(255,255,255,0.9);border-radius:18px;box-shadow:0 12px 40px rgba(110,20,60,0.12);overflow:hidden;display:grid;grid-template-columns:420px 1fr}
+    /* Фон */
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7, #fbc2eb);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
 
-    /* left column */
-    .left{padding:28px;background:linear-gradient(180deg,#fff 0%, #fff4f8 100%);display:flex;flex-direction:column;align-items:center;gap:18px}
-    .photo{width:320px;height:420px;border-radius:12px;overflow:hidden;flex-shrink:0;box-shadow:0 6px 18px rgba(90,20,60,0.12);background:#eee;display:flex;align-items:center;justify-content:center}
-    .photo img{width:100%;height:100%;object-fit:cover}
-    .hearts{position:relative;width:100%;height:60px}
+    /* Анимация фона */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-    /* right column */
-    .right{padding:40px 36px;position:relative}
-    h1{margin:0;font-size:28px;letter-spacing:0.2px}
-    p.lead{margin:10px 0 20px;color:var(--muted)}
-    .center-msg{background:linear-gradient(90deg, rgba(255,235,242,0.9), rgba(255,244,247,0.9));padding:18px;border-radius:12px;border:1px solid rgba(255,200,220,0.6);}
-    .btn{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--accent);color:white;text-decoration:none;font-weight:600;box-shadow:0 8px 18px rgba(255,107,159,0.18)}
+    /* Текст по центру */
+    .center-text {
+      position: absolute;
+      text-align: center;
+      color: #fff;
+      z-index: 10;
+      padding: 20px;
+      animation: fadeIn 3s ease forwards;
+    }
 
-    /* timeline */
-    .timeline{margin-top:18px;display:flex;flex-direction:column;gap:12px}
-    .event{display:flex;gap:12px;align-items:flex-start}
-    .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:6px}
-    .txt{background:#fff;padding:10px;border-radius:10px;border:1px solid rgba(200,160,180,0.25)}
+    .center-text h1 {
+      font-size: 2.8em;
+      margin-bottom: 15px;
+      text-shadow: 0 0 20px rgba(255, 192, 203, 1);
+      animation: heartbeat 1.5s infinite;
+    }
 
-    /* secret letter modal */
-    .overlay{position:fixed;inset:0;background:rgba(12,8,10,0.45);display:none;align-items:center;justify-content:center;z-index:60}
-    .modal{width:90%;max-width:720px;background:linear-gradient(180deg,#fff 0%, #fff9fb 100%);border-radius:14px;padding:26px;box-shadow:0 30px 80px rgba(40,10,30,0.5)}
-    .letter{white-space:pre-wrap;font-family:Georgia, 'Times New Roman', serif;font-size:18px;color:#382533}
+    .center-text p {
+      font-size: 1.4em;
+      line-height: 1.5;
+      max-width: 350px;
+      margin: 0 auto;
+      opacity: 0.95;
+      text-shadow: 0 0 10px rgba(255, 182, 193, 0.8);
+    }
 
-    /* floating hearts animation */
-    .floating-heart{position:fixed;pointer-events:none;opacity:0.95}
-    @keyframes floatup{0%{transform:translateY(0) scale(0.6);opacity:0}10%{opacity:1}100%{transform:translateY(-420px) scale(1.1);opacity:0}}
+    /* Сердечки */
+    .heart {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: #ff4d6d;
+      transform: rotate(-45deg);
+      animation: floatUp 6s linear infinite;
+    }
 
-    /* confetti */
-    .confetti-piece{position:fixed;width:10px;height:16px;opacity:0;z-index:90}
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: #ff4d6d;
+      border-radius: 50%;
+    }
 
-    /* responsive */
-    @media (max-width:880px){.card{grid-template-columns:1fr;}.left{order:2}.right{order:1}}
+    .heart::before {
+      top: -20px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 20px;
+      top: 0;
+    }
+
+    /* Анимации сердечек */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(-45deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px) rotate(-45deg) scale(0.7);
+        opacity: 0;
+      }
+    }
+
+    /* Биение сердца у текста */
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    /* Плавное появление текста */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card" role="main">
-      <div class="left">
-        <div class="photo" id="photoBox">
-          <!-- Замените anfi.jpg на своё фото (имя файла должно совпадать) -->
-          <img src="anfi.jpg" alt="Анфиса" id="mainPhoto" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'800\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3eaf0\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=28 fill=\'%23807b81\'>Положи файл anfi.jpg рядом с этим html</text></svg>'" />
-        </div>
-        <div class="hearts" aria-hidden="true"></div>
-        <div style="text-align:center">
-          <button class="btn" id="openLetter">Открыть письмо</button>
-        </div>
-      </div>
-      <div class="right">
-        <h1>Анфиса, это только для тебя</h1>
-        <p class="lead">Мы далеко друг от друга сейчас, но в моём сердце ты всегда рядом. Я собрал самые тёплые моменты и слова, чтобы сказать<br><strong>— я люблю тебя больше всего на свете.</strong></p>
 
-        <div class="center-msg">
-          <p style="margin:0">Маленькие сердечки летят, музыка тихо играет — это всё для твоей улыбки. Нажми <em>Открыть письмо</em>, чтобы увидеть сюрприз.</p>
-        </div>
-
-        <div class="timeline">
-          <div class="event"><div class="dot"></div><div class="txt">Первый разговор. Я почувствовал(а), что встречаю что-то настоящее.</div></div>
-          <div class="event"><div class="dot"></div><div class="txt">Наши шутки, которые до сих пор заставляют меня улыбаться.</div></div>
-          <div class="event"><div class="dot"></div><div class="txt">Мечты о будущем вместе — и я верю, что они произойдут.</div></div>
-        </div>
-
-        <div style="margin-top:20px">
-          <a class="btn" id="playPause">Включить музыку</a>
-        </div>
-      </div>
-    </div>
+  <!-- Текст -->
+  <div class="center-text">
+    <h1>Анфиса ❤️</h1>
+    <p>
+      Ты — моё счастье, моя мечта и вся моя вселенная.<br>
+      Даже если мы сейчас далеко друг от друга,<br>
+      однажды мы будем рядом навсегда.<br><br>
+      Я люблю тебя больше всего на свете! 💕
+    </p>
   </div>
 
-  <!-- overlay letter -->
-  <div class="overlay" id="overlay">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="letterTitle">
-      <h2 id="letterTitle">Для тебя, Анфиса</h2>
-      <div class="letter" id="letter">
-      </div>
-      <div style="margin-top:18px;text-align:right">
-        <button class="btn" id="closeLetter">Закрыть</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- audio (загрузите song.mp3 рядом с файлом, или встройте своё) -->
-  <audio id="bgAudio" loop>
-    <source src="song.mp3" type="audio/mpeg">
-  </audio>
-
+  <!-- Сердечки -->
   <script>
-    // --------------------------------------
-    // Тексты письма — можно править
-    // --------------------------------------
-    const letterLines = [
-      'Моя дорогая Анфиса,',
-      '',
-      'Когда я думаю о нас, внутри всё теплится и светится. Мы сейчас далеко, но в каждом моём дне ты — как маленькое солнце.',
-      '',
-      'Я помню твой смех, твои глаза, когда ты рассказываешь про то, что любишь. Я помню первые наши разговоры и минуты, когда я понял(а), что хочу быть рядом навсегда.',
-      '',
-      'Пусть это маленькое место в интернете напомнит тебе, как ты дорога мне. Я сделал(а) этот сайт, чтобы хранить нашу нежность и веру в наше будущее.',
-      '',
-      'Я люблю тебя больше всего на свете.',
-      '',
-      'Всегда твой(я),',
-      '[Твоё имя — подпиши как хочешь]'
-    ];
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      document.body.appendChild(heart);
 
-    // typewriter effect to reveal letter
-    function typeLetter(el, lines, idx=0, charIdx=0){
-      if(idx >= lines.length) return;
-      const line = lines[idx];
-      if(charIdx <= line.length){
-        el.textContent = lines.slice(0,idx).join('\n') + (idx? '\n':'') + line.slice(0,charIdx);
-        setTimeout(()=>typeLetter(el,lines,idx,charIdx+1), 24 + Math.random()*20);
-      } else {
-        setTimeout(()=>typeLetter(el,lines,idx+1,0), 220);
-      }
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
     }
 
-    // overlay controls
-    const overlay = document.getElementById('overlay');
-    const openBtn = document.getElementById('openLetter');
-    const closeBtn = document.getElementById('closeLetter');
-    const letterEl = document.getElementById('letter');
-    openBtn.addEventListener('click', ()=>{
-      overlay.style.display = 'flex';
-      letterEl.textContent = '';
-      setTimeout(()=>typeLetter(letterEl, letterLines), 200);
-      spawnHearts(18);
-      triggerConfetti(28);
-    });
-    closeBtn.addEventListener('click', ()=>{ overlay.style.display='none' });
+    setInterval(createHeart, 300);
+  </script>
 
-    // music play/pause
-    const audio = document.getElementById('bgAudio');
-    const playBtn = document.getElementById('playPause');
-    let playing=false;
-    playBtn.addEventListener('click', ()=>{
-      if(!playing){
-        audio.play().catch(()=>{});
-        playBtn.textContent='Пауза';
-        playing=true;
-      } else {audio.pause();playBtn.textContent='Включить музыку';playing=false}
-    });
-
-    // floating hearts
-    function spawnHearts(n=12){
-      for(let i=0;i<n;i++){
-        const h=document.createElement('div');
-        h.className='floating-heart';
-        const size=12+Math.random()*36;
-        h.style.width=size+'px';h.style.height=size+'px';
-        h.style.left=(20+Math.random()*60)+'%';
-        h.style.bottom='10%';
-        h.style.zIndex=80;
-        h.style.opacity=0;
-        h.innerHTML='❤️';
-        document.body.appendChild(h);
-        const delay = Math.random()*600;
-        setTimeout(()=>{
-          h.style.transition='transform 2.8s linear, opacity 2.8s linear';
-          h.style.transform='translateY(-420px) scale(1)';
-          h.style.opacity=1;
-        },delay);
-        setTimeout(()=>h.remove(),4000+delay);
-      }
-    }
-
-    // confetti simple
-    function triggerConfetti(count=20){
-      for(let i=0;i<count;i++){
-        const c=document.createElement('div');
-        c.className='confetti-piece';
-        c.style.left=(30+Math.random()*40)+'%';
-        c.style.top=(30+Math.random()*40)+'%';
-        c.style.width = (6 + Math.random()*10)+'px';
-        c.style.height = (8 + Math.random()*18)+'px';
-        c.style.background = ['#ff6b9f','#ffd166','#f8a1d1','#a6e3e9','#c7a6ff'][Math.floor(Math.random()*5)];
-        c.style.transform = 'rotate('+ (Math.random()*360)+'deg)';
-        c.style.opacity=1;
-        document.body.appendChild(c);
-        // animate
-        const dx = (Math.random()*200 - 100);
-        const dy = (150 + Math.random()*280);
-        c.animate([
-          {transform:'translate(0,0) rotate(0deg)', opacity:1},
-          {transform:`translate(${dx}px, ${dy}px) rotate(${Math.random()*360}deg)`, opacity:0}
-        ],{duration:1800+Math.random()*1200, easing:'cubic-bezier(.2,.7,.3,1)'});
-        setTimeout(()=>c.remove(),2600);
-      }
-    }
-
-    // gentle auto hearts near photo
-    setInterval(()=>{
-      const el=document.querySelector('.hearts');
-      const b=document.createElement('span');
-      b.textContent='💗';
-      b.style.position='absolute';
-      b.style.left=(10+Math.random()*80)+'%';
-      b.style.fontSize=(12+Math.random()*24)+'px';
-      b.style.opacity='0';
-      b.style.transform='translateY(10px)';
-      b.style.transition='all 1.8s linear';
-      el.appendChild(b);
-      requestAnimationFrame(()=>{b.style.opacity='1';b.style.transform='translateY(-26px)';});
-      setTimeout(()=>{b.style.opacity='0';b.style.transform='translateY(-46px)';},1400);
-      setTimeout(()=>b.remove(),2000);
-    },900);
-
-    // small accessibility: press Esc to close
-    document.addEventListener('keydown', e=>{if(e.key==='Escape') overlay.style.display='none'});
-
-    // mobile: tap photo to open modal too
-    document.getElementById('photoBox').addEventListener('click', ()=>{openBtn.click()});
+</body>
+</html>
