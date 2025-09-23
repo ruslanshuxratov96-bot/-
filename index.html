@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Для моей Анны 💖</title>
+  <title>Для моей любимой мамы 🌸</title>
   <style>
-    /* Фон */
+    /* Основные стили */
     body {
       margin: 0;
       padding: 0;
@@ -13,9 +13,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #ffe6f0, #ffb6c1, #ffdde1, #fbc2eb);
+      background: linear-gradient(135deg, #fff0f5, #ffe4e1, #fff8dc, #e0ffff);
       background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
+      animation: gradientBG 20s ease infinite;
       overflow: hidden;
       font-family: 'Comic Sans MS', cursive, sans-serif;
     }
@@ -27,7 +27,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Текст по центру */
+    /* Центральный текст */
     .center-text {
       position: absolute;
       text-align: center;
@@ -38,19 +38,19 @@
     }
 
     .center-text h1 {
-      font-size: 2.8em;
-      margin-bottom: 15px;
-      text-shadow: 0 0 25px rgba(255, 192, 203, 1);
-      animation: heartbeat 1.6s infinite;
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 30px rgba(255, 192, 203, 1);
+      animation: heartbeat 1.8s infinite;
     }
 
     .center-text p {
-      font-size: 1.3em;
-      line-height: 1.6;
-      max-width: 350px;
+      font-size: 1.4em;
+      line-height: 1.7;
+      max-width: 400px;
       margin: 0 auto;
       opacity: 0.95;
-      text-shadow: 0 0 12px rgba(255, 182, 193, 0.8);
+      text-shadow: 0 0 15px rgba(255, 182, 193, 0.9);
     }
 
     /* Сердечки */
@@ -58,9 +58,9 @@
       position: absolute;
       width: 40px;
       height: 40px;
-      background-color: #ff4d6d;
+      background-color: #ff6f91;
       transform: rotate(-45deg);
-      animation: floatUp 7s linear infinite;
+      animation: floatUp 8s linear infinite;
     }
 
     .heart::before,
@@ -69,7 +69,7 @@
       position: absolute;
       width: 40px;
       height: 40px;
-      background-color: #ff4d6d;
+      background-color: #ff6f91;
       border-radius: 50%;
     }
 
@@ -83,22 +83,34 @@
       top: 0;
     }
 
-    /* Анимация сердечек */
+    /* Летающие слова */
+    .floating-text {
+      position: absolute;
+      font-size: 1.2em;
+      color: #ff69b4;
+      font-weight: bold;
+      opacity: 0.9;
+      text-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+      animation: floatUp 10s linear infinite;
+      white-space: nowrap;
+    }
+
+    /* Анимация подъёма */
     @keyframes floatUp {
       0% {
-        transform: translateY(0) rotate(-45deg) scale(1);
+        transform: translateY(0) rotate(-5deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(-800px) rotate(-45deg) scale(0.7);
+        transform: translateY(-900px) rotate(5deg);
         opacity: 0;
       }
     }
 
-    /* Биение сердца у заголовка */
+    /* Биение сердца для заголовка */
     @keyframes heartbeat {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
+      50% { transform: scale(1.15); }
     }
 
     /* Плавное появление текста */
@@ -116,35 +128,62 @@
 </head>
 <body>
 
-  <!-- Текст -->
+  <!-- Центральный текст -->
   <div class="center-text">
-    <h1>Анна 💝</h1>
+    <h1>Мамочка 🌷</h1>
     <p>
-      Ты — самый добрый, нежный и удивительный человек в моей жизни.<br><br>
-      Даже если мы сейчас далеко друг от друга,<br>
-      я чувствую твоё тепло и заботу в каждом моменте.<br><br>
-      Настанет день, когда мы будем рядом всегда,<br>
-      и я смогу каждый день говорить тебе:<br>
-      <strong>Я люблю тебя больше всего на свете 💕</strong><br><br>
-      С любовью, твой Руслан 🌸
+      Ты — самое дорогое, что есть в моей жизни.<br><br>
+      Спасибо тебе за твою заботу, нежность и тепло.<br>
+      Ты всегда была рядом, поддерживала и верила в меня.<br><br>
+      <strong>Я люблю тебя больше всего на свете 💖</strong><br><br>
+      Ты — моя опора, мой свет и моя бесконечная любовь.<br>
+      Спасибо, что ты есть. 💐
     </p>
   </div>
 
-  <!-- Сердечки -->
   <script>
+    /* Летающие сердечки */
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
       document.body.appendChild(heart);
 
       setTimeout(() => {
         heart.remove();
-      }, 7000);
+      }, 8000);
     }
 
-    setInterval(createHeart, 300);
+    setInterval(createHeart, 350);
+
+    /* Летающие слова */
+    const words = [
+      "Я люблю тебя, мама 💖",
+      "Ты самая лучшая 🌸",
+      "Спасибо за всё ❤️",
+      "Ты наше счастье ✨",
+      "Ты самая родная 💕",
+      "Мамочка, ты ангел 😇",
+      "Ты мой свет 🌞",
+      "Ты — мой герой 💐"
+    ];
+
+    function createFloatingText() {
+      const text = document.createElement('div');
+      text.classList.add('floating-text');
+      text.innerText = words[Math.floor(Math.random() * words.length)];
+      text.style.left = Math.random() * window.innerWidth + 'px';
+      text.style.top = window.innerHeight + 'px';
+      text.style.animationDuration = (Math.random() * 3 + 7) + 's';
+      document.body.appendChild(text);
+
+      setTimeout(() => {
+        text.remove();
+      }, 10000);
+    }
+
+    setInterval(createFloatingText, 1200);
   </script>
 
 </body>
