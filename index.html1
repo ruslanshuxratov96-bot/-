@@ -1,1 +1,153 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Для моей Анфисы ❤️</title>
+  <style>
+    /* Фон */
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7, #fbc2eb);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    /* Анимация фона */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Текст по центру */
+    .center-text {
+      position: absolute;
+      text-align: center;
+      color: #fff;
+      z-index: 10;
+      padding: 20px;
+      animation: fadeIn 3s ease forwards;
+    }
+
+    .center-text h1 {
+      font-size: 2.8em;
+      margin-bottom: 15px;
+      text-shadow: 0 0 20px rgba(255, 192, 203, 1);
+      animation: heartbeat 1.5s infinite;
+    }
+
+    .center-text p {
+      font-size: 1.4em;
+      line-height: 1.5;
+      max-width: 350px;
+      margin: 0 auto;
+      opacity: 0.95;
+      text-shadow: 0 0 10px rgba(255, 182, 193, 0.8);
+    }
+
+    /* Сердечки */
+    .heart {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: #ff4d6d;
+      transform: rotate(-45deg);
+      animation: floatUp 6s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: #ff4d6d;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -20px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 20px;
+      top: 0;
+    }
+
+    /* Анимации сердечек */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(-45deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px) rotate(-45deg) scale(0.7);
+        opacity: 0;
+      }
+    }
+
+    /* Биение сердца у текста */
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    /* Плавное появление текста */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Текст -->
+  <div class="center-text">
+    <h1>Анфиса ❤️</h1>
+    <p>
+      Ты — моё счастье, моя мечта и вся моя вселенная.<br>
+      Даже если мы сейчас далеко друг от друга,<br>
+      однажды мы будем рядом навсегда.<br><br>
+      Я люблю тебя больше всего на свете! 💕
+    </p>
+  </div>
+
+  <!-- Сердечки -->
+  <script>
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
