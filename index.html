@@ -1,209 +1,258 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мамочке 💖</title>
-  <style>
-    /* ===== Фон ===== */
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #ffe5ec, #ffc2d1, #ffb3c6, #ff8fab, #fb6f92);
-      background-size: 400% 400%;
-      animation: gradientBG 18s ease infinite;
-      overflow: hidden;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ферма — для Камилы</title>
+<style>
+  :root{
+    --overlay: rgba(10,10,10,0.28);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background:#000}
+  /* Фон фермы (замени farm.jpg) */
+  .bg{
+    position:fixed;inset:0;background-image: url("farm.jpg"); background-size: cover; background-position: center; filter: contrast(1.05) saturate(1.05);
+    z-index:0;
+  }
+  /* полупрозрачная тёмная вуаль для контраста текста */
+  .veil{
+    position:fixed;inset:0;background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.14)); z-index:1;
+  }
 
-    /* Анимация фона */
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  /* контейнер */
+  .wrap{
+    position:relative; z-index:2; min-height:100vh; display:flex;align-items:center;justify-content:center;padding:24px;
+  }
 
-    /* ===== Центральный текст ===== */
-    .center-text {
-      position: absolute;
-      text-align: center;
-      color: #fff;
-      z-index: 10;
-      padding: 20px;
-      animation: fadeIn 3s ease forwards;
-    }
+  /* карточка по центру с легкой прозрачностью */
+  .card{
+    width:980px; max-width:96%; background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border-radius:18px; padding:28px; box-shadow: 0 18px 50px rgba(5,5,5,0.45); position:relative; overflow:visible;
+    display:grid; grid-template-columns: 360px 1fr; gap:20px; align-items:center;
+  }
 
-    .center-text h1 {
-      font-size: 3.2em;
-      margin-bottom: 20px;
-      text-shadow: 0 0 30px rgba(255, 105, 180, 1);
-      animation: heartbeat 1.8s infinite;
-    }
+  /* слева: изображение жителя */
+  .left{
+    display:flex;flex-direction:column;align-items:center;gap:12px; justify-content:center;
+  }
+  .villager{
+    width:320px; height:320px; border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#f7f3ec,#efe6d9);
+    display:flex;align-items:center;justify-content:center; box-shadow:0 10px 30px rgba(0,0,0,0.35);
+  }
+  .villager img{width:88%;height:auto; transform-origin:center; animation: villager-bob 3s ease-in-out infinite;}
 
-    .center-text p {
-      font-size: 1.5em;
-      line-height: 1.8;
-      max-width: 420px;
-      margin: 0 auto;
-      font-weight: bold;
-      text-shadow: 0 0 15px rgba(255, 105, 180, 0.9);
-    }
+  @keyframes villager-bob{
+    0%{transform: translateY(0) scale(1);}
+    50%{transform: translateY(-10px) scale(1.02);}
+    100%{transform: translateY(0) scale(1);}
+  }
 
-    /* ===== Сердечки ===== */
-    .heart {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background-color: #ff4d6d;
-      transform: rotate(-45deg);
-      animation: floatUp linear infinite;
-      bottom: -50px; /* Начало чуть ниже экрана */
-    }
+  /* правая колонка: текст и область для анимированных слов */
+  .right{position:relative;padding:8px 12px 18px 12px;}
+  h1{margin:0;color:#fff;font-size:34px;text-shadow:0 6px 20px rgba(0,0,0,0.6)}
+  p.lead{color: #fff; opacity:0.95; margin-top:10px; font-size:16px; line-height:1.45; text-shadow:0 4px 18px rgba(0,0,0,0.45)}
 
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background-color: #ff4d6d;
-      border-radius: 50%;
-    }
+  /* область, где появляются летающие слова */
+  .floating-area{
+    position:absolute; inset:0; pointer-events:none; z-index:10; overflow:hidden;
+  }
 
-    .heart::before {
-      top: -15px;
-      left: 0;
-    }
+  /* стиль каждой плавающей фразы */
+  .float-phrase{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%) translateY(0);
+    white-space:nowrap;
+    font-weight:700;
+    color:#ffffff; /* белый текст */
+    -webkit-text-stroke: 2px #000000; /* чёрный контур */
+    text-shadow:
+      2px 2px 0 rgba(0,0,0,0.9),
+      0 6px 18px rgba(0,0,0,0.45);
+    padding:8px 18px;
+    border-radius:999px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(4px);
+    font-size: 28px;
+    line-height:1;
+    opacity:0;
+    will-change: transform, opacity;
+  }
 
-    .heart::after {
-      left: 15px;
-      top: 0;
-    }
+  /* несколько вариаций размера чтобы не всё одинаково */
+  .size-sm{font-size:20px; padding:6px 12px; -webkit-text-stroke:1.6px}
+  .size-md{font-size:26px; padding:8px 16px; -webkit-text-stroke:2px}
+  .size-lg{font-size:32px; padding:10px 20px; -webkit-text-stroke:2.4px}
 
-    /* ===== Летающие слова ===== */
-    .floating-text {
-      position: absolute;
-      font-size: 1.3em; /* чуть меньше */
-      font-weight: bold;
-      color: #ffffff;
-      padding: 4px 10px;
-      text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 0.9),
-        0 0 15px rgba(255, 105, 180, 0.9);
-      opacity: 0.95;
-      white-space: nowrap;
-      bottom: -50px; /* начинаем чуть ниже экрана */
-      animation: floatUpText linear infinite;
-    }
+  /* Анимация: от нижней границы вверх, исчезает, после чего JS заново возвращает элемент вниз */
+  @keyframes rise {
+    0%   { transform: translateX(var(--x)) translateY(var(--start)) scale(1); opacity: 0; }
+    5%   { opacity: 1; }
+    60%  { opacity: 1; }
+    100% { transform: translateX(var(--x-end)) translateY(var(--end)) scale(0.96); opacity: 0; }
+  }
 
-    /* ===== Анимации ===== */
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) rotate(-5deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh) rotate(5deg);
-        opacity: 0;
-      }
-    }
+  /* адаптив */
+  @media (max-width:880px){
+    .card{grid-template-columns:1fr; padding:18px;}
+    .villager{width:220px;height:220px}
+    .float-phrase{font-size:20px}
+    .size-lg{font-size:24px}
+  }
 
-    @keyframes floatUpText {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-110vh);
-        opacity: 0;
-      }
-    }
-
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(25px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  /* маленькие подсказки снизу */
+  .note{position:absolute; bottom:12px; left:12px; color:rgba(255,255,255,0.8); font-size:13px; z-index:12}
+</style>
 </head>
 <body>
+  <!-- фон: замени farm.jpg на реальное изображение фермы в стиле Minecraft -->
+  <div class="bg" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
 
-  <!-- Центральный текст -->
-  <div class="center-text">
-    <h1>Мамочка 🌷</h1>
-    <p>
-      Ты — самое дорогое, что есть у меня в жизни.<br><br>
-      Спасибо тебе за твою заботу, бесконечную любовь и тепло.<br>
-      Ты всегда была рядом, поддерживала и вдохновляла меня.<br><br>
-      <strong>Я люблю тебя больше всего на свете 💖</strong><br><br>
-      Ты — мой свет, моя гордость и моя вечная радость. 🌸
-    </p>
+  <div class="wrap">
+    <div class="card" role="main" aria-label="Подарок">
+      <div class="left">
+        <div class="villager" aria-hidden="true">
+          <!-- помести villager.png рядом с этим файлом -->
+          <img src="villager.png" alt="Minecraft villager" onerror="this.style.opacity='0.9';">
+        </div>
+        <div style="color:#fff; text-align:center; font-weight:700; text-shadow:0 6px 18px rgba(0,0,0,0.55)">Ферма Minecraft</div>
+      </div>
+
+      <div class="right">
+        <h1>Камила, это для тебя 🌾</h1>
+        <p class="lead">Небольшая открытка в стиле Minecraft — мило, забавно и от души. Нажимай на экран и смотри, как слова поднимаются, как облачка над полем.</p>
+
+        <!-- ОБЛАСТЬ ДЛЯ ПОЯВЛЕНИЯ ЛЕТАЮЩИХ ФРАЗ -->
+        <div class="floating-area" id="floatingArea" aria-hidden="true"></div>
+
+        <div class="note">Подсказка: открой на телефоне — эффект ещё милее 💖</div>
+      </div>
+    </div>
   </div>
 
-  <script>
-    /* ===== Сердечки ===== */
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * (window.innerWidth - 40) + 'px';
-      const size = Math.random() * 20 + 20; // случайный размер
-      heart.style.width = size + 'px';
-      heart.style.height = size + 'px';
-      heart.style.animationDuration = (Math.random() * 4 + 5) + 's'; // случайная скорость
-      document.body.appendChild(heart);
+<script>
+/*
+  Скрипт создаёт фразы, которые появляются у нижней границы,
+  поднимаются вверх и исчезают. После исчезновения создаются заново.
+  Фразы включают ту, которую ты просил: "Камила — соска 🍼🥛".
+  Меняй массив phrases, чтобы добавить/изменить фразы.
+*/
 
-      setTimeout(() => {
-        heart.remove();
-      }, 9000);
-    }
-    setInterval(createHeart, 400);
+const phrases = [
+  "Камила — соска 🍼🥛",
+  "Камила — моя малышка 🍼",
+  "Камила, ты самая милая 💖",
+  "Камила, солнышко фермы 🌞",
+  "Камила — любимая 💝",
+  "Камила, обожаю тебя 🧡"
+];
 
-    /* ===== Летающие слова ===== */
-    const words = [
-      "Я люблю тебя, мама 💖",
-      "Ты самая лучшая 🌸",
-      "Ты наше счастье ✨",
-      "Спасибо за всё ❤️",
-      "Ты самая родная 💕",
-      "Ты — мой свет 🌞",
-      "Ты — мой ангел 😇",
-      "Ты мой герой 💐",
-      "Ты всегда в моём сердце 💝",
-      "Ты самая милая 🌺",
-      "Ты моя гордость 🌟",
-      "Мамочка, я тебя люблю бесконечно 💞",
-      "Ты самая добрая 🌷",
-      "Ты — мой дом 🏡",
-      "Спасибо, что ты есть 💐"
-    ];
+// Настройки: интервал создания новых фраз (мс)
+const CREATE_INTERVAL = 700; // чем меньше — тем чаще появляются
+const AREA = document.getElementById('floatingArea');
 
-    function createFloatingText() {
-      const text = document.createElement('div');
-      text.classList.add('floating-text');
-      text.innerText = words[Math.floor(Math.random() * words.length)];
+function rand(min, max){ return Math.random() * (max - min) + min; }
 
-      /* Центрируем и не вылетаем за края */
-      const safeZone = window.innerWidth - 200; // область безопасной ширины
-      text.style.left = Math.random() * safeZone + 50 + 'px';
-      text.style.animationDuration = (Math.random() * 4 + 6) + 's';
+function spawnPhrase(text, sizeClass){
+  const el = document.createElement('div');
+  el.className = 'float-phrase ' + sizeClass;
 
-      document.body.appendChild(text);
+  // ставим текст (чёткий белый с чёрным контуром, как просил)
+  el.textContent = text;
 
-      setTimeout(() => {
-        text.remove();
-      }, 10000);
-    }
+  // начальные координаты: случайная позиция по горизонтали, но в безопасной зоне
+  const pad = 24; // отступ от краев
+  const safeW = Math.max(200, window.innerWidth - pad*2);
+  const startX = Math.floor(rand(pad, pad + safeW));
+  // convert to CSS translate variable (we'll use translateX with pixel offsets)
+  // we'll set CSS var --x to center translation
+  el.style.setProperty('--x', startX + 'px');
+  // small horizontal drift during rise
+  const endX = startX + rand(-80, 80);
+  el.style.setProperty('--x-end', endX + 'px');
 
-    setInterval(createFloatingText, 900);
-  </script>
+  // start slightly below visible area and end above top
+  el.style.setProperty('--start', (window.innerHeight + 40) + 'px');
+  el.style.setProperty('--end', (-120 - rand(0,200)) + 'px');
 
+  // random left offset via transform change: we initially translateX to center, so use calc in animation by using variables
+  // but since variables are used in transform, set initial left to 0 and handle transform in keyframes
+  // position: left 0 so absolute coordinates via translateX(var(--x))
+  el.style.left = '0px';
+  el.style.top = '0px';
+
+  // random horizontal placement via CSS var and transform in keyframes
+  // animation duration random
+  const duration = rand(6, 12); // seconds
+  el.style.animation = `rise ${duration}s linear forwards`;
+  // give a slight scale random
+  el.style.transformOrigin = 'center';
+  el.style.opacity = '0';
+
+  // add slight variation to blur/brightness background for readability
+  el.style.background = 'rgba(255,255,255,0.08)';
+
+  AREA.appendChild(el);
+
+  // After animation ends remove element
+  setTimeout(()=> {
+    el.remove();
+  }, duration * 1000 + 200);
+
+  // Make element actually use the CSS variables in transform by applying inline style keyframes via WAAPI fallback:
+  // We animate transform with JS to ensure consistent behavior across browsers.
+  // compute timeline frames:
+  const startY = window.innerHeight + 40;
+  const endY = -120 - rand(0,200);
+  const startXNum = startX;
+  const endXNum = endX;
+  // seed small wobble via rotate
+  const rotStart = rand(-6,6);
+  const rotEnd = rand(-8,8);
+
+  // Use Web Animations API for smoother control if available
+  if(el.animate){
+    el.animate([
+      { transform: `translate(${startXNum}px, ${startY}px) rotate(${rotStart}deg) scale(1)`, opacity:0 },
+      { transform: `translate(${startXNum}px, ${startY*0.6}px) rotate(${rotStart/2}deg) scale(1.02)`, opacity:1 },
+      { transform: `translate(${endXNum}px, ${endY}px) rotate(${rotEnd}deg) scale(0.98)`, opacity:0 }
+    ], {
+      duration: duration * 1000,
+      easing: 'linear',
+      iterations: 1,
+      fill: 'forwards'
+    });
+  } else {
+    // fallback: use CSS animation defined earlier by relying on CSS vars (already set)
+  }
+}
+
+// Создаём фразы повторно
+let spawnTimer = setInterval(()=>{
+  const txt = phrases[Math.floor(Math.random() * phrases.length)];
+  // выбираем размер: чаще средний, реже большой/маленький
+  const r = Math.random();
+  const sizeClass = r < 0.14 ? 'size-lg' : (r < 0.5 ? 'size-md' : 'size-sm');
+  spawnPhrase(txt, sizeClass);
+}, CREATE_INTERVAL);
+
+// Инициализация: создадим пару фраз сразу
+for(let i=0;i<6;i++){
+  setTimeout(()=> {
+    const txt = phrases[Math.floor(Math.random() * phrases.length)];
+    const r = Math.random();
+    const sizeClass = r < 0.14 ? 'size-lg' : (r < 0.5 ? 'size-md' : 'size-sm');
+    spawnPhrase(txt, sizeClass);
+  }, i * 300);
+}
+
+// При ресайзе — очищаем старые и позволяем новые появляться корректно
+window.addEventListener('resize', ()=>{
+  // optional: remove all current phrases to avoid stuck positions
+  // document.querySelectorAll('.float-phrase').forEach(el=>el.remove());
+});
+</script>
 </body>
 </html>
