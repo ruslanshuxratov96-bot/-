@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Для моей Анфисы ❤️</title>
+  <title>Для моей Анны 💖</title>
   <style>
     /* Фон */
     body {
@@ -13,7 +13,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7, #fbc2eb);
+      background: linear-gradient(135deg, #ffe6f0, #ffb6c1, #ffdde1, #fbc2eb);
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
       overflow: hidden;
@@ -40,17 +40,17 @@
     .center-text h1 {
       font-size: 2.8em;
       margin-bottom: 15px;
-      text-shadow: 0 0 20px rgba(255, 192, 203, 1);
-      animation: heartbeat 1.5s infinite;
+      text-shadow: 0 0 25px rgba(255, 192, 203, 1);
+      animation: heartbeat 1.6s infinite;
     }
 
     .center-text p {
-      font-size: 1.4em;
-      line-height: 1.5;
+      font-size: 1.3em;
+      line-height: 1.6;
       max-width: 350px;
       margin: 0 auto;
       opacity: 0.95;
-      text-shadow: 0 0 10px rgba(255, 182, 193, 0.8);
+      text-shadow: 0 0 12px rgba(255, 182, 193, 0.8);
     }
 
     /* Сердечки */
@@ -60,7 +60,7 @@
       height: 40px;
       background-color: #ff4d6d;
       transform: rotate(-45deg);
-      animation: floatUp 6s linear infinite;
+      animation: floatUp 7s linear infinite;
     }
 
     .heart::before,
@@ -83,7 +83,7 @@
       top: 0;
     }
 
-    /* Анимации сердечек */
+    /* Анимация сердечек */
     @keyframes floatUp {
       0% {
         transform: translateY(0) rotate(-45deg) scale(1);
@@ -95,21 +95,17 @@
       }
     }
 
-    /* Биение сердца у текста */
+    /* Биение сердца у заголовка */
     @keyframes heartbeat {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.2);
-      }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
     }
 
     /* Плавное появление текста */
     @keyframes fadeIn {
       0% {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(25px);
       }
       100% {
         opacity: 1;
@@ -122,12 +118,15 @@
 
   <!-- Текст -->
   <div class="center-text">
-    <h1>Анфиса ❤️</h1>
+    <h1>Анна 💝</h1>
     <p>
-      Ты — моё счастье, моя мечта и вся моя вселенная.<br>
+      Ты — самый добрый, нежный и удивительный человек в моей жизни.<br><br>
       Даже если мы сейчас далеко друг от друга,<br>
-      однажды мы будем рядом навсегда.<br><br>
-      Я люблю тебя больше всего на свете! 💕
+      я чувствую твоё тепло и заботу в каждом моменте.<br><br>
+      Настанет день, когда мы будем рядом всегда,<br>
+      и я смогу каждый день говорить тебе:<br>
+      <strong>Я люблю тебя больше всего на свете 💕</strong><br><br>
+      С любовью, твой Руслан 🌸
     </p>
   </div>
 
@@ -137,12 +136,12 @@
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
       document.body.appendChild(heart);
 
       setTimeout(() => {
         heart.remove();
-      }, 6000);
+      }, 7000);
     }
 
     setInterval(createHeart, 300);
