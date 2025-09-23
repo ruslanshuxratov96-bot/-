@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Мамочке 💖</title>
   <style>
-    /* Фон */
+    /* ===== Фон ===== */
     body {
       margin: 0;
       padding: 0;
@@ -27,7 +27,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Центральный текст */
+    /* ===== Центральный текст ===== */
     .center-text {
       position: absolute;
       text-align: center;
@@ -53,59 +53,61 @@
       text-shadow: 0 0 15px rgba(255, 105, 180, 0.9);
     }
 
-    /* Сердечки */
+    /* ===== Сердечки ===== */
     .heart {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       background-color: #ff4d6d;
       transform: rotate(-45deg);
-      animation: floatUp 8s linear infinite;
+      animation: floatUp linear infinite;
+      bottom: -50px; /* Начало чуть ниже экрана */
     }
 
     .heart::before,
     .heart::after {
       content: "";
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       background-color: #ff4d6d;
       border-radius: 50%;
     }
 
     .heart::before {
-      top: -20px;
+      top: -15px;
       left: 0;
     }
 
     .heart::after {
-      left: 20px;
+      left: 15px;
       top: 0;
     }
 
-    /* Летающие слова */
+    /* ===== Летающие слова ===== */
     .floating-text {
       position: absolute;
-      font-size: 1.8em;
+      font-size: 1.3em; /* чуть меньше */
       font-weight: bold;
       color: #ffffff;
-      padding: 5px 15px;
+      padding: 4px 10px;
       text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 0.8),
+        2px 2px 4px rgba(0, 0, 0, 0.9),
         0 0 15px rgba(255, 105, 180, 0.9);
       opacity: 0.95;
       white-space: nowrap;
+      bottom: -50px; /* начинаем чуть ниже экрана */
       animation: floatUpText linear infinite;
     }
 
-    /* Анимация подъёма */
+    /* ===== Анимации ===== */
     @keyframes floatUp {
       0% {
         transform: translateY(0) rotate(-5deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(-900px) rotate(5deg);
+        transform: translateY(-110vh) rotate(5deg);
         opacity: 0;
       }
     }
@@ -116,27 +118,19 @@
         opacity: 1;
       }
       100% {
-        transform: translateY(-100vh);
+        transform: translateY(-110vh);
         opacity: 0;
       }
     }
 
-    /* Биение сердца у заголовка */
     @keyframes heartbeat {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.15); }
     }
 
-    /* Плавное появление текста */
     @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(25px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -155,22 +149,24 @@
   </div>
 
   <script>
-    /* Сердечки */
+    /* ===== Сердечки ===== */
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
-      heart.style.left = Math.random() * window.innerWidth + 'px';
-      heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+      heart.style.left = Math.random() * (window.innerWidth - 40) + 'px';
+      const size = Math.random() * 20 + 20; // случайный размер
+      heart.style.width = size + 'px';
+      heart.style.height = size + 'px';
+      heart.style.animationDuration = (Math.random() * 4 + 5) + 's'; // случайная скорость
       document.body.appendChild(heart);
 
       setTimeout(() => {
         heart.remove();
-      }, 8000);
+      }, 9000);
     }
+    setInterval(createHeart, 400);
 
-    setInterval(createHeart, 300);
-
-    /* Летающие слова */
+    /* ===== Летающие слова ===== */
     const words = [
       "Я люблю тебя, мама 💖",
       "Ты самая лучшая 🌸",
@@ -193,9 +189,12 @@
       const text = document.createElement('div');
       text.classList.add('floating-text');
       text.innerText = words[Math.floor(Math.random() * words.length)];
-      text.style.left = Math.random() * (window.innerWidth - 150) + 'px';
-      text.style.top = window.innerHeight + 'px';
+
+      /* Центрируем и не вылетаем за края */
+      const safeZone = window.innerWidth - 200; // область безопасной ширины
+      text.style.left = Math.random() * safeZone + 50 + 'px';
       text.style.animationDuration = (Math.random() * 4 + 6) + 's';
+
       document.body.appendChild(text);
 
       setTimeout(() => {
@@ -203,7 +202,7 @@
       }, 10000);
     }
 
-    setInterval(createFloatingText, 800);
+    setInterval(createFloatingText, 900);
   </script>
 
 </body>
