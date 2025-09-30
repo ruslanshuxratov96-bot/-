@@ -1,136 +1,97 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Колесо Фортуны</title>
+  <title>С Днём Рождения, Бабушка!</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #a8edea, #fed6e3);
-      font-family: Arial, sans-serif;
-    }h1 {
-  margin-bottom: 20px;
-  color: #333;
-}
-
-canvas {
-  margin: 20px 0;
-  background: #fff;
-  border: 5px solid #444;
-  border-radius: 50%;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  background: #ff69b4;
-  color: #fff;
-  border-radius: 8px;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #ff85c1;
-}
-
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 20px;
+      color: #333;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-size: 40px;
+      color: #d6336c;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    p {
+      font-size: 20px;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto 20px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .photo-frame {
+      display: inline-block;
+      border: 10px solid gold;
+      border-radius: 20px;
+      padding: 5px;
+      margin: 20px 0;
+      background: white;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    .photo-frame img {
+      max-width: 300px;
+      border-radius: 15px;
+    }
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(1); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <h1>Колесо Фортуны</h1>  <!-- Первое колесо --><canvas id="wheel1" width="300" height="300"></canvas> <button onclick="spinWheel(1)">Крутить колесо 1</button>
+  <h1>💖 С Днём Рождения, любимая бабушка! 💖</h1>
 
-  <p id="result1"></p>  <!-- Второе колесо --><canvas id="wheel2" width="300" height="300" style="display:none;"></canvas> <button id="spin2" style="display:none;" onclick="spinWheel(2)">Крутить колесо 2</button>
+  <div class="photo-frame">
+    <img src="babushka.jpg" alt="Бабушка">
+  </div>
 
-  <p id="result2"></p>  <script>
-    const wheel1Options = ["Руслан", "Камила"];
-    const wheel2Options = ["Правда", "Действие"];
+  <p>
+    Дорогая бабушка! 🌸<br>
+    Сегодня твой день, и я хочу, чтобы ты знала — ты самое дорогое сокровище для нашей семьи.  
+    Ты — доброта, тепло и мудрость, которые делают наш дом светлым и уютным.  
+    Пусть каждый день твоей жизни будет наполнен здоровьем, радостью и любовью.  
+    Мы безмерно гордимся тобой и благодарим Аллаха за то, что Он подарил нам такую бабушку.  
+    <br><br>
+    🎂💐 С Днём рождения!
+  </p>
 
-    let spinning = false;
-    let selectedPlayer = "";
+  <div class="hearts" id="hearts"></div>
 
-    function drawWheel(canvasId, options) {
-      const canvas = document.getElementById(canvasId);
-      const ctx = canvas.getContext("2d");
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const radius = canvas.width / 2 - 5;
-      const angleStep = (2 * Math.PI) / options.length;
-
-      options.forEach((option, index) => {
-        const startAngle = index * angleStep;
-        const endAngle = startAngle + angleStep;
-        ctx.beginPath();
-        ctx.moveTo(centerX, centerY);
-        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-        ctx.fillStyle = index % 2 === 0 ? "#ffcccb" : "#add8e6";
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(centerX, centerY);
-        ctx.rotate(startAngle + angleStep / 2);
-        ctx.textAlign = "right";
-        ctx.fillStyle = "#000";
-        ctx.font = "16px Arial";
-        ctx.fillText(option, radius - 10, 5);
-        ctx.restore();
-      });
+  <script>
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.getElementById("hearts").appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
     }
-
-    drawWheel("wheel1", wheel1Options);
-
-    function spinWheel(wheelNumber) {
-      if (spinning) return;
-      spinning = true;
-
-      const options = wheelNumber === 1 ? wheel1Options : wheel2Options;
-      const canvas = document.getElementById(`wheel${wheelNumber}`);
-      const ctx = canvas.getContext("2d");
-      let angle = 0;
-      const spinAngle = Math.floor(Math.random() * 360) + 720;
-      const duration = 2000;
-      const start = performance.now();
-
-      function animate(timestamp) {
-        const elapsed = timestamp - start;
-        const progress = Math.min(elapsed / duration, 1);
-        angle = spinAngle * progress;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
-        ctx.rotate((angle * Math.PI) / 180);
-        ctx.translate(-canvas.width / 2, -canvas.height / 2);
-        drawWheel(canvas.id, options);
-        ctx.restore();
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          spinning = false;
-          const selectedIndex = Math.floor(((360 - (angle % 360)) / (360 / options.length))) % options.length;
-          const resultText = options[selectedIndex];
-
-          if (wheelNumber === 1) {
-            document.getElementById("result1").textContent = `Выбран: ${resultText}`;
-            selectedPlayer = resultText;
-            document.getElementById("wheel2").style.display = "block";
-            document.getElementById("spin2").style.display = "inline-block";
-            drawWheel("wheel2", wheel2Options);
-          } else {
-            document.getElementById("result2").textContent = `${selectedPlayer} выбрал: ${resultText}`;
-          }
-        }
-      }
-
-      requestAnimationFrame(animate);
-    }
-  </script></body>
+    setInterval(createHeart, 500);
+  </script>
+</body>
 </html>
